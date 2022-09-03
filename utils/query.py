@@ -6,9 +6,10 @@ def query(sql):
     功能; 使用sql语句查询数据库中学生选课信息.
     参数: sql(string)
     """
-    db = pymysql.connect('localhost', 'root', config['MYSQL_PASSWORD'], config['DATABASE_NAME'], charset='utf8')
+    db = pymysql.connect(host='localhost', user='root', password=config['MYSQL_PASSWORD'], database=config['DATABASE_NAME'], charset='utf8')
     cur = db.cursor()
     try:
+        print("query", sql)
         cur.execute(sql)
         result = cur.fetchall()
         db.commit()
@@ -21,6 +22,7 @@ def query(sql):
         db.rollback()
     cur.close()
     db.close()
+    print("query", result)
     return result
 
 
@@ -29,11 +31,13 @@ def update(sql):
     功能; 使用sql语句更新数据库中学生选课信息。
     参数: sql(string)
     """
-    db = pymysql.connect('localhost', 'root', config['MYSQL_PASSWORD'], config['DATABASE_NAME'], charset='utf8')
+    db = pymysql.connect(host='localhost', user='root', password=config['MYSQL_PASSWORD'], database=config['DATABASE_NAME'], charset='utf8')
     cur = db.cursor()
     try:
+        print("update", sql)
         cur.execute(sql)
         db.commit()
+        print("update", cur.rowcount)
         #print('update success')
         # print('update success')
     except:
